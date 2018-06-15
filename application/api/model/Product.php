@@ -35,14 +35,11 @@ class Product extends BaseModel
 
     public static function getProductsByCategoryID($categoryID, $paginate = true, $page = 1, $size = 30)
     {
-        $query = self::
-        where('category_id', '=', $categoryID);
-        if (!$paginate)
-        {
+        $query = self::where('category_id', '=', $categoryID);
+        if (!$paginate) {
             return $query->select();
         }
-        else
-        {
+        else {
             // paginate 第二参数true表示采用简洁模式，简洁模式不需要查询记录总数
             return $query->paginate(
                 $size, true, [
