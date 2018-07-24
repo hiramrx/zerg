@@ -12,11 +12,11 @@ namespace app\api\validate;
 class IDCollection extends BaseValidate
 {
     protected $rule = [
-        'id' => 'require|IdCheck'
+        'ids' => 'require|IdCheck'
     ];
 
     protected $message = [
-        'id' => 'id必须是以逗号分隔的正整数'
+        'ids' => 'id必须是以逗号分隔的正整数'
     ];
 
     protected function IdCheck($value)
