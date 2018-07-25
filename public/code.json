@@ -1,0 +1,5 @@
+//扫描注释 生成json文件
+//第一个目录的swagger脚本文件
+//第二个文件是注释所在的文件夹
+//第三个目录是生成json文件存放的文件夹
+php vendor/zircote/swagger-php/bin/swagger vendor/zircote/swagger-php/Examples -o public/
