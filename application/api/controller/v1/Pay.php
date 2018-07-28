@@ -14,10 +14,6 @@ class Pay
 {
     public function getPreOrder()
     {
-        /*根据传来的orderID查询数据库
-         *
-         *
-         * */
         $preData = [];
         $orderID = input(post . orderID);
         $order = new OrderModel();

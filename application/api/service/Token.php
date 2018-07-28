@@ -18,13 +18,19 @@ class Token
 {
     public static function generateToken()
     {
-//        32个字符组成一组随机字符串
+        //32个字符组成一组随机字符串
         $randChars = getRandChar(32);
         $timestamp = $_SERVER['REQUEST_TIME_FLOAT'];
         $salt = '12nklJHO9302JOsEFjnkfnai2';
         return md5($randChars.$timestamp.$salt);
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     * @throws Exception
+     * @throws TokenException
+     */
     public static function getTokenVar($key)
     {
         $token = Request::instance()->header('token');
@@ -44,6 +50,11 @@ class Token
 
     }
 
+    /**
+     * @return mixed
+     * @throws Exception
+     * @throws TokenException
+     */
     public static function getCurrentUid()
     {
         return self::getTokenVar('uid');

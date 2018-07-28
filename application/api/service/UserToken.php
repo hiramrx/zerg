@@ -21,7 +21,7 @@ class UserToken extends Token
     protected $wxAppSecret;
     protected $wxLoginUrl;
 
-    function __construct($code)
+    public function __construct($code)
     {
         $this->code = $code;
         $this->wxAppID = config('wx.appid');
@@ -30,6 +30,11 @@ class UserToken extends Token
             $this->wxAppSecret, $this->code);
     }
 
+    /**
+     * @return string
+     * @throws Exception
+     * @throws WeChatException
+     */
     public function get()
     {
         $result = curl_get($this->wxLoginUrl);
@@ -47,6 +52,11 @@ class UserToken extends Token
         }
     }
 
+    /**
+     * @param $wxResult
+     * @return string
+     * @throws TokenException
+     */
     private function grantToken($wxResult)
     {
         $openid = $wxResult['openid'];
@@ -63,6 +73,11 @@ class UserToken extends Token
 
     }
 
+    /**
+     * @param $cachedValue
+     * @return string
+     * @throws TokenException
+     */
     private function saveToCache($cachedValue)
     {
         $key = self::generateToken();

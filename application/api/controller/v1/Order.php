@@ -11,8 +11,9 @@ namespace app\api\controller\v1;
 use app\api\validate\PlaceOrder;
 use app\api\service\Token;
 use app\api\service\Order as OrderService;
+use think\Controller;
 
-class Order
+class Order extends Controller
 {
     public function placeOrder()
     {
