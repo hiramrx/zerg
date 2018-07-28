@@ -54,7 +54,7 @@ class Address extends Controller
         if (!$userAddress) {
             $user->address()->save($dataArray); //新增
         } else {
-            $user->address->sava($dataArray); //更新
+            $user->address->save($dataArray); //更新
         }
         return 'success';
     }

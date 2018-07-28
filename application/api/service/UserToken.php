@@ -11,6 +11,7 @@ namespace app\api\service;
 
 use app\lib\exception\TokenException;
 use app\lib\exception\WeChatException;
+use think\Cache;
 use think\Exception;
 use app\api\model\User as UserModel;
 
@@ -84,7 +85,7 @@ class UserToken extends Token
         $value = json_encode($cachedValue);
         $expire_in = config('setting.token_expire_in');
 
-        $request = cache($key,$value,$expire_in);
+        $request = Cache::set($key,$value,$expire_in);
         if(!$request){
             throw new TokenException([
                 'msg' => '服务器缓存异常',
