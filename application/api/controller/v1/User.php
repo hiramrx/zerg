@@ -19,6 +19,6 @@ class User extends Controller
         $extend = input('extend');
         $id = \app\api\service\Token::getCurrentUid();
         $userModel = \app\api\model\User::get($id);
-        $userModel->save(['nickname'=>$nickname,'extend'=>$extend]);
+        $userModel->save(['nickname' => $nickname, 'extend' => $extend]);
     }
 }
