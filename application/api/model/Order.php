@@ -11,6 +11,10 @@ namespace app\api\model;
 
 class Order extends BaseModel
 {
-    protected $autoWriteTimestamp = true;
-    protected $hidden = ['user_id','create_time','delete_time'];
+    protected $hidden = ['user_id', 'create_time', 'delete_time'];
+
+    public static function getByUid($uid, $page)
+    {
+        return self::where(['user_id' => $uid])->page($page)->select();
+    }
 }

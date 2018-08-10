@@ -78,11 +78,10 @@ class Order
                 'create_time' => $create_time
             ];
 
-        } catch (Exception $ex) {
+        } catch (Exception $e) {
             Db::rollback();
-            throw $ex;
+            throw $e;
         }
-
 
 
     }
@@ -124,14 +123,22 @@ class Order
         return $orderSnap;
     }
 
+    /**
+     * @return array
+     * @throws Exception
+     * @throws UserException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     private function getUserAddress()
     {
-        $address = UserAddress::where('user_id','=',$this->uid)
+        $address = UserAddress::where('user_id', '=', $this->uid)
             ->find();
         if (!$address) {
             throw new UserException([
-               'msg' => '用户收货地址不存在，下单失败',
-               'code' => 80001
+                'msg' => '用户收货地址不存在，下单失败',
+                'code' => 80001
             ]);
         }
 
@@ -152,13 +159,13 @@ class Order
         foreach ($this->oProducts as $oProduct) {
             $pStatus =
                 $this->getProductStatus(
-                    $oProduct['product_id'],$oProduct['count'],$this->products);
+                    $oProduct['product_id'], $oProduct['count'], $this->products);
             if (!$pStatus['haveStock']) {
                 $status['pass'] = false;
             }
             $status['orderPrice'] += $pStatus['totalPrice'];
             $status['totalCount'] += $oProduct['count'];
-            array_push($status['orderInfo'],$pStatus);
+            array_push($status['orderInfo'], $pStatus);
         }
         return $status;
     }
@@ -175,13 +182,13 @@ class Order
         ];
 
         //根据商品的ID找到对应的记录，给pStatus赋值；
-        for ($i=0;$i<count($products);$i++) {
+        for ($i = 0; $i < count($products); $i++) {
             if ($oId == $products[$i]['id']) {
                 $pStatus['id'] = $products[$i]['id'];
                 $pStatus['count'] = $oCount;
                 $pStatus['name'] = $products[$i]['name'];
-                $pStatus['totalPrice'] = $products[$i]['price']*$oCount;
-                if ($products[$i]['stock']-$oCount >= 0) {
+                $pStatus['totalPrice'] = $products[$i]['price'] * $oCount;
+                if ($products[$i]['stock'] - $oCount >= 0) {
                     $pStatus['haveStock'] = true;
                 }
             }
@@ -194,7 +201,7 @@ class Order
     {
         $oPIDs = [];
         foreach ($products as $item) {
-            array_push($oPIDs,$item['product_id']);
+            array_push($oPIDs, $item['product_id']);
         }
         $product = ProductModel::all($oPIDs)
             ->visible(['id', 'price', 'stock', 'name', 'main_img_url'])

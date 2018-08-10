@@ -16,6 +16,15 @@ use app\lib\exception\ProductException;
 
 class Product
 {
+    /**
+     * @param int $count
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws ProductException
+     * @throws \app\lib\exception\ParameterException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     public function getRecent($count=15)
     {
         (new Count())->goCheck();
@@ -28,6 +37,12 @@ class Product
         return $product;
     }
 
+    /**
+     * @param int $id
+     * @return mixed
+     * @throws ProductException
+     * @throws \app\lib\exception\ParameterException
+     */
     public function getAllInCategory($id= -1)
     {
         (new IDMustBePositiveInt())->goCheck();
@@ -40,6 +55,12 @@ class Product
         return $products->hidden(['summary']);
     }
 
+    /**
+     * @param $id
+     * @return array|false|\PDOStatement|string|\think\Model
+     * @throws ProductException
+     * @throws \app\lib\exception\ParameterException
+     */
     public function getOne($id)
     {
         (new IDMustBePositiveInt())->goCheck();

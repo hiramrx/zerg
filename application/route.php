@@ -41,7 +41,13 @@ Route::get('api/:version/category/all','api/:version.Category/getAllCategories')
 Route::post('api/:version/token/user','api/:version.Token/getToken');
 
 //address
+Route::get('api/:version/address','api/:version.Address/getAddress');
 Route::post('api/:version/address','api/:version.Address/createOrUpdateAddress');
 
 //order
-Route::post('api/:version/Order','api/:version.Order/placeOrder');
+Route::post('api/:version/order','api/:version.Order/placeOrder');
+Route::get('api/:version/order/by_user','api/:version.Order/getOrderByUid');
+Route::get('api/:version/order/:id','api/:version.Order/getDetail');
+
+//user
+Route::post('api/:version/user/wx_info','api/:version.User/updateUserInfo');

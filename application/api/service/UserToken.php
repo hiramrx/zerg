@@ -11,6 +11,7 @@ namespace app\api\service;
 
 use app\lib\exception\TokenException;
 use app\lib\exception\WeChatException;
+use think\Cache;
 use think\Exception;
 use app\api\model\User as UserModel;
 
@@ -21,7 +22,7 @@ class UserToken extends Token
     protected $wxAppSecret;
     protected $wxLoginUrl;
 
-    function __construct($code)
+    public function __construct($code)
     {
         $this->code = $code;
         $this->wxAppID = config('wx.appid');
@@ -30,6 +31,11 @@ class UserToken extends Token
             $this->wxAppSecret, $this->code);
     }
 
+    /**
+     * @return string
+     * @throws Exception
+     * @throws WeChatException
+     */
     public function get()
     {
         $result = curl_get($this->wxLoginUrl);
@@ -47,6 +53,11 @@ class UserToken extends Token
         }
     }
 
+    /**
+     * @param $wxResult
+     * @return string
+     * @throws TokenException
+     */
     private function grantToken($wxResult)
     {
         $openid = $wxResult['openid'];
@@ -63,13 +74,18 @@ class UserToken extends Token
 
     }
 
+    /**
+     * @param $cachedValue
+     * @return string
+     * @throws TokenException
+     */
     private function saveToCache($cachedValue)
     {
         $key = self::generateToken();
         $value = json_encode($cachedValue);
         $expire_in = config('setting.token_expire_in');
 
-        $request = cache($key,$value,$expire_in);
+        $request = Cache::set($key,$value,$expire_in);
         if(!$request){
             throw new TokenException([
                 'msg' => '服务器缓存异常',

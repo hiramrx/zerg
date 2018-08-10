@@ -16,14 +16,23 @@ use app\lib\exception\ThemeException;
 
 class Theme
 {
-    public function getSimpleList($id='')
+    /**
+     * @param string $ids
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws ThemeException
+     * @throws \app\lib\exception\ParameterException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getSimpleList($ids = '')
     {
         (new IDCollection())->goCheck();
 
-        $themes = explode(',',$id);
+        $themes = explode(',', $ids);
 
         $result = ThemeModel::with('topicImg,headImg')->select($themes);
-        if($result->isEmpty()){
+        if ($result->isEmpty()) {
             throw new ThemeException();
         }
         return $result;
@@ -34,7 +43,7 @@ class Theme
         (new IDMustBePositiveInt())->goCheck();
 
         $theme = ThemeModel::with('products,topicImg,headImg')->find($id);
-        if(!$theme){
+        if (!$theme) {
             throw new ThemeException();
         }
         return $theme;
