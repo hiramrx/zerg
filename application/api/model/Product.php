@@ -28,11 +28,29 @@ class Product extends BaseModel
         return $this->hasMany('ProductProperty', 'product_id', 'id');
     }
 
+
+    /**
+     * @param $count
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     public static function getMostRecent($count)
     {
         return self::limit($count)->order('create_time', 'desc')->select();
     }
 
+    /**
+     * @param $categoryID
+     * @param bool $paginate
+     * @param int $page
+     * @param int $size
+     * @return false|\PDOStatement|string|\think\Collection|\think\Paginator
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     public static function getProductsByCategoryID($categoryID, $paginate = true, $page = 1, $size = 30)
     {
         $query = self::where('category_id', '=', $categoryID);
@@ -44,6 +62,13 @@ class Product extends BaseModel
         }
     }
 
+    /**
+     * @param $id
+     * @return array|false|\PDOStatement|string|\think\Model
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     public static function getProductDetail($id)
     {
         return self::with('imgs,properties')->find($id);

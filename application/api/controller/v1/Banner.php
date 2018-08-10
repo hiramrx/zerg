@@ -15,6 +15,12 @@ use app\lib\exception\BannerMissException;
 
 class Banner
 {
+    /**
+     * @param $id
+     * @return array|false|\PDOStatement|string|\think\Model
+     * @throws BannerMissException
+     * @throws \app\lib\exception\ParameterException
+     */
     public function getBanner($id)
     {
         $validate = new IDMustBePositiveInt();

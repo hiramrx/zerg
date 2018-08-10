@@ -26,6 +26,9 @@
         "topthink/think-oracle": "1.*",
         "zircote/swagger-php": "^2.0"
     },
+    "require-dev": {
+        "phing/phing": "2.*"
+    },
     "autoload": {
         "psr-4": {
             "app\\": "application"
