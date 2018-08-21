@@ -11,7 +11,7 @@ namespace app\api\model;
 
 class Order extends BaseModel
 {
-    protected $hidden = ['user_id', 'create_time', 'delete_time'];
+    protected $hidden = ['user_id', 'delete_time'];
 
     public static function getByUid($uid, $page)
     {
