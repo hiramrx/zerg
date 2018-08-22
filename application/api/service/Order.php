@@ -163,7 +163,7 @@ class Order
             if (!$pStatus['haveStock']) {
                 $status['pass'] = false;
             }
-            $status['orderPrice'] += $pStatus['totalPrice'];
+            $status['orderPrice'] += $pStatus['price'];
             $status['totalCount'] += $oProduct['count'];
             array_push($status['orderInfo'], $pStatus);
         }
@@ -176,18 +176,20 @@ class Order
         $pStatus = [
             'id' => null,
             'haveStock' => false,
-            'count' => 0,
+            'counts' => 0,
             'name' => '',
-            'totalPrice' => 0
+            'price' => 0,
+            'main_img_url' => ''
         ];
 
         //根据商品的ID找到对应的记录，给pStatus赋值；
         for ($i = 0; $i < count($products); $i++) {
             if ($oId == $products[$i]['id']) {
                 $pStatus['id'] = $products[$i]['id'];
-                $pStatus['count'] = $oCount;
+                $pStatus['counts'] = $oCount;
                 $pStatus['name'] = $products[$i]['name'];
-                $pStatus['totalPrice'] = $products[$i]['price'] * $oCount;
+                $pStatus['price'] = $products[$i]['price'] * $oCount;
+                $pStatus['main_img_url'] = $products[$i]['main_img_url'];
                 if ($products[$i]['stock'] - $oCount >= 0) {
                     $pStatus['haveStock'] = true;
                 }
