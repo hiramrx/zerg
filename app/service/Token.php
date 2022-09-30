@@ -5,9 +5,7 @@
  * Date: 2018/1/17
  * Time: 13:57
  */
-
 namespace app\service;
-
 
 use app\exception\TokenException;
 use think\Cache;

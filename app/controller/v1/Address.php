@@ -5,18 +5,16 @@
  * Date: 2018/2/3
  * Time: 13:06
  */
-
 namespace app\controller\v1;
 
-
+use app\BaseController;
+use app\exception\UserException;
 use app\model\User;
 use app\model\UserAddress;
-use app\validate\AddressNew;
 use app\service\Token;
-use app\exception\UserException;
-use think\Controller;
+use app\validate\AddressNew;
 
-class Address extends Controller
+class Address extends BaseController
 {
     //前置方法作为键名。需要前置方法的方法作为值
     protected $beforeActionList = [

@@ -5,24 +5,22 @@
  * Date: 2018/1/11
  * Time: 22:35
  */
-
 namespace app\exception;
 
+use app\ExceptionHandle as appHandle;
+use think\facade\Log;
+use think\Response;
 
-use think\exception\Handle;
-use think\Log;
-use think\Request;
-
-class ExceptionHandle extends Handle
+class ExceptionHandle extends appHandle
 {
     private $code;
     private $msg;
     private $errorCode;
     //还需要返回客户端当前请求的url
 
-    public function render(\Exception $e)
+    public function render($request, \Throwable $e): Response
     {
-        if($e instanceof BaseException){
+        if ($e instanceof BaseException) {
             //如果是自定义的异常
             $this->code      = $e->code;
             $this->msg       = $e->msg;
@@ -30,16 +28,15 @@ class ExceptionHandle extends Handle
         } else {
 
             if (config('app_debug')){
-                return parent::render($e);
+                return parent::render($request, $e);
             } else {
                 $this->code = 500;
                 $this->msg  = '服务器内部错误';
                 $this->errorCode = 999;
-                $this->RecordErrorLog($e);
+                $this->recordErrorLog($e);
             }
         }
 
-        $request = Request::instance();
         $result = [
             'msg' => $this->msg,
             'error_code' => $this->errorCode,
@@ -48,13 +45,13 @@ class ExceptionHandle extends Handle
         return json($result,$this->code);
     }
 
-    public function RecordErrorLog(\Exception $e)
+    public function recordErrorLog(\Throwable $e)
     {
-        Log::init([
-            'type' => 'file',
-            'path' => LOG_PATH,
-            'level' => ['error']
-        ]);
-        Log::record($e->getMessage(),'error');
+//        Log::init([
+//            'type' => 'file',
+//            'path' => LOG_PATH,
+//            'level' => ['error']
+//        ]);
+        Log::error($e->getMessage());
     }
 }

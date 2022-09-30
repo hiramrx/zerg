@@ -8,16 +8,15 @@
 
 namespace app\controller\v1;
 
+use app\BaseController;
 use app\validate\IDMustBePositiveInt;
 use app\validate\PlaceOrder;
 use app\service\Token;
 use app\service\Order as OrderService;
 use app\model\Order as OrderModel;
 use app\exception\OrderException;
-use think\Controller;
-use think\Request;
 
-class Order extends Controller
+class Order extends BaseController
 {
     /**
      * @return array

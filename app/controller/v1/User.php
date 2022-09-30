@@ -5,13 +5,11 @@
  * Date: 2018/7/29
  * Time: 0:54
  */
-
 namespace app\controller\v1;
 
+use app\BaseController;
 
-use think\Controller;
-
-class User extends Controller
+class User extends BaseController
 {
     public function updateUserInfo()
     {
