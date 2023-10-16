@@ -9,6 +9,7 @@
 namespace app\controller\v1;
 
 
+use app\exception\BaseException;
 use app\service\UserToken;
 use app\validate\TokenGet;
 
@@ -19,8 +20,21 @@ class Token
         (new TokenGet())->goCheck();
         $usertoken = new UserToken($code);
         $token = $usertoken->get();
-        return [
+        return json([
             'token' => $token
-        ];
+        ]);
+    }
+
+    public function verifyToken($token='')
+    {
+        if(!$token){
+            throw new BaseException([
+                'token不允许为空'
+            ]);
+        }
+        $valid = \app\service\Token::verifyToken($token);
+        return json([
+            'isValid' => $valid
+        ]);
     }
 }

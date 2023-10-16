@@ -8,7 +8,7 @@
 namespace app\service;
 
 use app\exception\TokenException;
-use think\Cache;
+use think\facade\Cache;
 use think\Exception;
 use think\Request;
 
@@ -56,5 +56,16 @@ class Token
     public static function getCurrentUid()
     {
         return self::getTokenVar('uid');
+    }
+
+    public static function verifyToken($token)
+    {
+        $exist = Cache::get($token);
+        if($exist){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

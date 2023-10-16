@@ -11,7 +11,7 @@ namespace app\service;
 
 use app\exception\TokenException;
 use app\exception\WeChatException;
-use think\Cache;
+use think\facade\Cache;
 use think\Exception;
 use app\model\User as UserModel;
 
@@ -25,8 +25,8 @@ class UserToken extends Token
     public function __construct($code)
     {
         $this->code = $code;
-        $this->wxAppID = config('wx.appid');
-        $this->wxAppSecret = config('wx.appsecret');
+        $this->wxAppID = config('wx.app_id');
+        $this->wxAppSecret = config('wx.app_secret');
         $this->wxLoginUrl = sprintf(config('wx.login_url'),$this->wxAppID,
             $this->wxAppSecret, $this->code);
     }

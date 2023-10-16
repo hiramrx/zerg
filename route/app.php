@@ -20,8 +20,8 @@ Route::get('hello/:name', 'index/hello');
 Route::get('api/:version/banner/:id','api/:version.Banner/getBanner');
 
 //theme
-Route::get('api/:version/theme','api/:version.Theme/getSimpleList');
 Route::get('api/:version/theme/:id','api/:version.Theme/getComplexOne');
+Route::get('api/:version/theme','api/:version.Theme/getSimpleList');
 
 //product
 Route::get('api/:version/product/recent','api/:version.Product/getRecent');
@@ -33,6 +33,7 @@ Route::get('api/:version/category/all','api/:version.Category/getAllCategories')
 
 //token
 Route::post('api/:version/token/user','api/:version.Token/getToken');
+Route::post('api/:version/token/verify','api/:version.Token/verifyToken');
 
 //address
 Route::get('api/:version/address','api/:version.Address/getAddress');

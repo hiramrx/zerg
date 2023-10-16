@@ -12,7 +12,7 @@ class BaseModel extends Model
     {
         $finalUrl = $name;
         if($data['from'] == 1){
-            return config('setting.img_prefix').$name;
+            return config('app.img_prefix').$name;
         } else {
             return $finalUrl;
         }

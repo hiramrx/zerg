@@ -71,6 +71,6 @@ class Product extends BaseModel
      */
     public static function getProductDetail($id)
     {
-        return self::with('imgs,properties')->find($id);
+        return self::with(['imgs', 'properties'])->find($id);
     }
 }
