@@ -1,8 +1,7 @@
 <?php
 
-namespace controller\v1;
+namespace app\controller\v1;
 
-use app\controller\v1\Banner;
 use think\testing\TestCase;
 
 class BannerTest extends TestCase
